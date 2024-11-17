@@ -1,0 +1,127 @@
+/* ベース設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+/* ヘッダー */
+h1 {
+    color: #007bff;
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* 入力フォームの設定 */
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* ラジオボタン設定 */
+.radio-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.radio-group label {
+    font-weight: normal;
+    font-size: 14px;
+    color: #666;
+}
+
+/* ボタンのスタイリング */
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #003f8f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* 提案表示エリア */
+#program-suggestion {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#program-suggestion p {
+    margin: 0;
+    font-size: 16px;
+    color: #444;
+}
+
+/* エクササイズカウント表示 */
+#exercise-count {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #007bff;
+}
+
+/* 動画埋め込みのレスポンシブ対応 */
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 アスペクト比のためのパディング */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}

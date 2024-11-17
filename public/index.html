@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運動プログラム選択 - 症状に応じた運動コースの提案</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+<div id="initial-section">
+    <h1>運動プログラム選択 ver 2.3</h1>
+    <p>今日の体調や症状に応じた運動プログラムを提案し、データを送信します。以下の症状がある場合は選択してください。</p>
+
+    <!-- ユーザーID入力欄 -->
+    <div class="form-group">
+        <label for="userId">ユーザーID:</label>
+        <input type="text" id="userId" placeholder="ユーザーIDを入力してください" required>
+        <button id="fetchDataBtn">データ取得</button>
+    </div>
+
+    <!-- 前回のデータ表示エリア -->
+    <div id="userData">
+        <p id="exerciseCount">前回の実施回数: データなし</p>
+        <p id="heartRate">前回の心拍数: データなし</p>
+        <p id="RPE">前回のRPE: データなし</p>
+    </div>
+
+    <!-- カウント入力欄 -->
+    <div class="form-group">
+        <label for="userCount">運動プログラムを行うのは何回目か入力してください:</label>
+        <input type="number" id="userCount" placeholder="運動プログラムを行うのは何回目か入力してください" min="1" step="1" required>
+    </div>
+</div>
+    
+    <!-- フォーム -->
+    <form id="suggestForm" onsubmit="suggestAndSubmit(event)">
+        <div class="form-group">
+            <label>疲労感:</label>
+            <div class="radio-group">
+                <input type="radio" id="fatigue_none" name="fatigue" value="なし" required>
+                <label for="fatigue_none">なし</label>
+                <input type="radio" id="fatigue_mild" name="fatigue" value="軽度">
+                <label for="fatigue_mild">軽度</label>
+                <input type="radio" id="fatigue_moderate" name="fatigue" value="中程度">
+                <label for="fatigue_moderate">中程度</label>
+                <input type="radio" id="fatigue_severe" name="fatigue" value="重度">
+                <label for="fatigue_severe">重度</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>筋肉痛:</label>
+            <div class="radio-group">
+                <input type="radio" id="muscle_pain_none" name="muscle_pain" value="なし" required>
+                <label for="muscle_pain_none">なし</label>
+                <input type="radio" id="muscle_pain_mild" name="muscle_pain" value="軽度">
+                <label for="muscle_pain_mild">軽度</label>
+                <input type="radio" id="muscle_pain_moderate" name="muscle_pain" value="中程度">
+                <label for="muscle_pain_moderate">中程度</label>
+                <input type="radio" id="muscle_pain_severe" name="muscle_pain" value="重度">
+                <label for="muscle_pain_severe">重度</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>息切れ:</label>
+            <div class="radio-group">
+                <input type="radio" id="breathlessness_none" name="breathlessness" value="なし" required>
+                <label for="breathlessness_none">なし</label>
+                <input type="radio" id="breathlessness_mild" name="breathlessness" value="軽度">
+                <label for="breathlessness_mild">軽度</label>
+                <input type="radio" id="breathlessness_moderate" name="breathlessness" value="中程度">
+                <label for="breathlessness_moderate">中程度</label>
+                <input type="radio" id="breathlessness_severe" name="breathlessness" value="重度">
+                <label for="breathlessness_severe">重度</label>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button type="submit">運動コースを提案して送信</button>
+        </div>
+    </form>
+
+    <div id="program-suggestion"></div>
+
+    <!-- フィードバック入力フォーム - 初期は非表示 -->
+    <div id="feedback-form" style="display: none;">
+    <h1>運動終了後の感想</h1>
+    <div class="form-group">
+        <label for="heartRate">運動中の最高心拍数</label>
+        <p>ウェアラブルデバイスに表示された最高心拍数をご回答ください。</p>
+        <input type="number" id="heartRate" name="heartRate" min="60" max="250" value="150" required placeholder="心拍数を入力（60-250）">
+    </div>
+
+    <div class="form-group">
+        <label for="RPE">運動中の主観的なつらさ</label>
+        <p>6～20でご回答ください。</p>
+        <input type="number" id="RPE" name="RPE" min="6" max="20" value="15" required placeholder="主観的なつらさを入力（6-20）">
+    </div>
+
+    <div class="form-group">
+        <label for="feedback">今日の運動を実施した感想を自由に書いてください:</label>
+        <textarea id="feedback" name="feedback" placeholder="（任意）"></textarea>
+    </div>
+
+    <div class="button-container">
+        <button type="button" onclick="submitFeedback()">送信</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
