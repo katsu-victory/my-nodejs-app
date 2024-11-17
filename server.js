@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const { google } = require('googleapis');
-const fs = require('fs');
 const path = require('path');
 
 console.log('Initializing the server...');
@@ -15,14 +14,12 @@ console.log('Middleware and static files added...');
 
 // Google Sheets API 認証設定
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const credentialsPath = 'credentials.json';
 
 try {
-    console.log('Reading credentials file...');
-    const credentials = JSON.parse(fs.readFileSync(credentialsPath));
-    console.log('Credentials loaded.');
+    console.log('Reading credentials from environment variables...');
+    const credentials = JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'base64').toString('utf-8'));
     const auth = new google.auth.GoogleAuth({
-        credentials,
+        credentials: JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'base64').toString('utf-8')),
         scopes: SCOPES,
     });
 
@@ -30,7 +27,7 @@ try {
     console.log('Google Sheets API initialized.');
 
     // スプレッドシートIDを設定
-    const SPREADSHEET_ID = '1_JlR1uk7mCUNs6vlxv8VY-3lNWdHrg7HUYzQilWz7WA';
+    const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 
     // データをスプレッドシートに追加するエンドポイント
     app.post('/addData', async (req, res) => {
@@ -59,10 +56,10 @@ try {
         try {
             const response = await sheets.spreadsheets.values.get({
                 spreadsheetId: SPREADSHEET_ID,
-                range: 'シート1!A1:K10',
+                range: 'シート1!A1:K',
             });
             const rows = response.data.values;
-            if (rows.length) {
+            if (rows && rows.length) {
                 console.log('Data retrieved from Google Sheets.');
                 res.status(200).send({ data: rows });
             } else {
